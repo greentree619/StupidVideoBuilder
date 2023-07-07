@@ -1,0 +1,42 @@
+// Here you can add other styles
+
+.card-body > div > .text-medium-emphasis{
+    -ms-word-break: break-all;
+    word-break: break-all;
+
+ /* Non standard for webkit */
+     word-break: break-word;
+
+    -webkit-hyphens: auto;
+       -moz-hyphens: auto;
+        -ms-hyphens: auto;
+            hyphens: auto;
+}
+
+.root-menu>.nav-item>.nav-link.active {
+    font-size: 17px;
+    font-weight: 500;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: #1a73e8;
+}
+
+.root-menu>.nav-item>.nav-link {
+    font-size: 17px;
+    font-weight: 500;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: rgba(0,0,0,0.6);
+}
+
+.main-menu>.nav-item>.nav-link.active {
+    font-size: 15px;
+    font-weight: 500;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: #1a73e8;
+}
+
+.main-menu>.nav-item>.nav-link {
+    font-size: 15px;
+    font-weight: 500;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: rgba(0,0,0,0.6);
+}
