@@ -142,16 +142,16 @@ const AppBreadcrumb = () => {
                         Keyword
                       </CNavLink>
                     </CNavItem>
-                    <CNavItem className="px-1">
+                    {/* <CNavItem className="px-1">
                       <CNavLink className={isSelctedTab("cloudflare_dns")} href={'#/cloudflare/dns/?tab=cloudflare_dns&zoneId=' + activeZoneId + '&domainName=' + activeDomainName}>
                         DNS Status
                       </CNavLink>
-                    </CNavItem>
-                    <CNavItem className="px-1">
+                    </CNavItem> */}
+                    {/* <CNavItem className="px-1">
                       <CNavLink className={isSelctedTab("theme_article")} href={'#/theme/article/?tab=theme_article&domainId=' + activeDomainId + '&domainName=' + activeDomainName + '&domainIp=' + activeDomainIp}>
                         Theme
                       </CNavLink>
-                    </CNavItem>
+                    </CNavItem> */}
                     <CNavItem className="px-1">
                       <CNavLink className={isSelctedTab("schedule_view")} href={'#/schedule/view/?tab=schedule_view&domainId=' + activeDomainId + '&isOnAFScrapping=' + isOnAFScrapping + '&scrappingMode=' +scrappingMode+ '&isOnPublish=' + isOnPublish}>
                         Schedule

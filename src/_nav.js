@@ -318,34 +318,34 @@ const _nav = [
   //   to: '/article/list',
   //   icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   // },
-  {
-    component: CNavTitle,
-    name: 'Domain Management',
-  },
-  {
-    component: CNavItem,
-    name: 'Zone',
-    to: '/cloudflare/zone/',
-    icon: <CIcon icon={cilCloudUpload} customClassName="nav-icon" />,
-  },
+  // {
+  //   component: CNavTitle,
+  //   name: 'Domain Management',
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'Zone',
+  //   to: '/cloudflare/zone/',
+  //   icon: <CIcon icon={cilCloudUpload} customClassName="nav-icon" />,
+  // },
   // {
   //   component: CNavItem,
   //   name: 'DNS Records',
   //   to: '/cloudflare/dns',
   //   icon: <CIcon icon={cilWindow} customClassName="nav-icon" />,
   // },
-  {
-    component: CNavItem,
-    name: 'AWS S3 Bucket',
-    to: '/amazone/bucket',
-    icon: <CIcon icon={cilPaintBucket} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'AWS EC2',
-    to: '/amazone/ec2',
-    icon: <CIcon icon={cilLaptop} customClassName="nav-icon" />,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'AWS S3 Bucket',
+  //   to: '/amazone/bucket',
+  //   icon: <CIcon icon={cilPaintBucket} customClassName="nav-icon" />,
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'AWS EC2',
+  //   to: '/amazone/ec2',
+  //   icon: <CIcon icon={cilLaptop} customClassName="nav-icon" />,
+  // },
   {
     component: CNavTitle,
     name: 'Build & SYNC',

@@ -151,11 +151,11 @@ const AppHeader = () => {
           <CNavItem>
             <CNavLink href="#">Settings</CNavLink>
           </CNavItem> */}
-            <CNavItem>
+            {/* <CNavItem>
               <CNavLink href={'#/article/setting/?domainId=' + activeDomainId} className={((activeMainTab == "article-forge") ? "active" : "")}>
                 AF Setting
               </CNavLink>
-            </CNavItem>
+            </CNavItem> */}
             <CNavItem>
               <CNavLink href={'#/openai/setting/?domainId=' + activeDomainId} className={((activeMainTab == "openai") ? "active" : "")}>
                 OpenAI Setting
@@ -165,8 +165,8 @@ const AppHeader = () => {
           <CHeaderNav>
             {activeDomainName.length > 0 && (
               <CCol xs="auto">
-                <CBadge color={activeZoneStatus == 'active' ? "success" : "dark"} shape="rounded-pill">{curDomainName}</CBadge>
-                &nbsp;
+                {/* <CBadge color={activeZoneStatus == 'active' ? "success" : "dark"} shape="rounded-pill">{curDomainName}</CBadge>
+                &nbsp; */}
                 <CBadge color={isOnScrapping ? "success" : "dark"} shape="rounded-pill">Query Scrap</CBadge>
                 &nbsp;
                 <CBadge color={isOnAFScrapping ? "success" : "dark"} shape="rounded-pill">Scrapping</CBadge>
