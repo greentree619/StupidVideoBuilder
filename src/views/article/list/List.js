@@ -444,7 +444,7 @@ class ListBase extends Component {
         <CCardHeader>
           <CContainer>
             <CRow>
-              <CCol className="align-self-start">All Articles</CCol>
+              <CCol className="align-self-start">All Videos</CCol>
               {this.state.projectInfo != null && this.state.projectInfo.projectid != null && (
                 <>
                   <CCol className="align-self-end col-5">
@@ -459,7 +459,7 @@ class ListBase extends Component {
                   </CCol>
                   <CCol className="align-self-end" xs="auto">
                     <Link to={`/article/add`} state={{ projectId: this.state.projectInfo.projectid }}>
-                      <CButton type="button">New Article</CButton>
+                      <CButton type="button">New Video</CButton>
                     </Link>
                     &nbsp;
                     <CButton

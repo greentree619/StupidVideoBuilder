@@ -146,9 +146,9 @@ const View = (props) => {
     // setAlertMsg('Faild to update content unfortunatley.')
     let ret = await response.json()
     if (response.status === 200 && ret) {
-      // setAlertMsg('Article content is updated successfully.')
+      // setAlertMsg('Video content is updated successfully.')
       // setAlertColor('success')
-      toast.success('Article content is updated successfully.', alertConfirmOption);
+      toast.success('Video content is updated successfully.', alertConfirmOption);
     }
     else
     {
@@ -199,7 +199,7 @@ const View = (props) => {
   return (
     <>
       <CCard className="mb-4">
-        <CCardHeader>Article View</CCardHeader>
+        <CCardHeader>Video View</CCardHeader>
         <CCardBody>
         {/* <ToastContainer
           position="top-right"
@@ -367,7 +367,7 @@ const View = (props) => {
             </div>
             <CCard style={{ width: '100%' }}>
               <CCardBody>
-                <CCardTitle>Article Images</CCardTitle>
+                <CCardTitle>Video Images</CCardTitle>
                 <CCardText>
                   <div className="clearfix">
                   {thumbImageArray.map((img, idx) => {

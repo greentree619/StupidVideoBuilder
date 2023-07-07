@@ -291,10 +291,10 @@ const _nav = [
     name: 'Dashboard',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    },
+    // badge: {
+    //   color: 'info',
+    //   text: 'NEW',
+    // },
   },
   {
     component: CNavTitle,
@@ -302,13 +302,13 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Create Website',
+    name: 'Create Project',
     to: '/project/add',
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'All Websites',
+    name: 'All Projects',
     to: '/project/list',
     icon: <CIcon icon={cilStorage} customClassName="nav-icon" />,
   },

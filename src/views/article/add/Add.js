@@ -99,9 +99,9 @@ const Add = (props) => {
     // setAlertMsg('Faild to add article unfortunatley.')
     let ret = await response.json()
     if (response.status === 200 && ret.data != null) {
-      // setAlertMsg('Article content is added successfully.')
+      // setAlertMsg('Video content is added successfully.')
       // setAlertColor('success')
-      toast.success('Article content is added successfully.', alertConfirmOption);
+      toast.success('Video content is added successfully.', alertConfirmOption);
       var articlesAry = [ret.data, ...curProjectArticleList];
       dispatch({ type: 'set', curProjectArticleList: articlesAry })
     }
@@ -158,7 +158,7 @@ const Add = (props) => {
   return (
     <>
       <CCard className="mb-4">
-        <CCardHeader>New Article</CCardHeader>
+        <CCardHeader>New Video</CCardHeader>
         <CCardBody>
           <CAlert
             color={alertColor}
@@ -297,7 +297,7 @@ const Add = (props) => {
             </div>
             <CCard style={{ width: '100%' }}>
               <CCardBody>
-                <CCardTitle>Article Images</CCardTitle>
+                <CCardTitle>Video Images</CCardTitle>
                 <CCardText>
                   <div className="clearfix">
                   {thumbImageArray.map((img, idx) => {

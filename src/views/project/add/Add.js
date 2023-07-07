@@ -711,7 +711,7 @@ const Add = (props) => {
                         </CCol>
                       </CRow>
                       <CRow className="mb-3 py-0">
-                        <CFormLabel htmlFor="ArticleImageNumber" className="col-sm-4 col-form-label">Article Image Number</CFormLabel>
+                        <CFormLabel htmlFor="ArticleImageNumber" className="col-sm-4 col-form-label">Video Image Number</CFormLabel>
                         <CCol sm={4}>
                           <CFormInput type="number" id="ArticleImageNumber" value={imageNumber} onChange={(e) => inputChangeHandler(setImageNumber, e)}
                             disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
@@ -728,7 +728,7 @@ const Add = (props) => {
                         </CCol>
                       </CRow>
                       <CRow className="mb-3 py-0">
-                        <CFormLabel htmlFor="insteadOfTitle" className="col-sm-4 col-form-label">Article Image Keyword Instead of Title</CFormLabel>
+                        <CFormLabel htmlFor="insteadOfTitle" className="col-sm-4 col-form-label">Video Image Keyword Instead of Title</CFormLabel>
                         <CCol sm={8}>
                           <CFormInput type="text" id="insteadOfTitle" value={insteadOfTitle} placeholder='Split each keyword by ";"'
                             onChange={(e) => inputChangeHandler(setInsteadOfTitle, e)}

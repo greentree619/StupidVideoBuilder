@@ -165,7 +165,7 @@ const View = (props) => {
                       active={activeKey === 2}
                       onClick={() => setActiveKey(2)}
                     >
-                      Scrap Articles
+                      Scrap Script
                     </CNavLink>
                   </CNavItem>
                   <CNavItem>

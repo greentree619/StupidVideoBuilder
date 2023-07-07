@@ -132,7 +132,7 @@ const AppBreadcrumb = () => {
               <CHeaderNav className="d-md-flex me-auto main-menu">
                 <CNavItem className="px-1">
                   <CNavLink href="#/project/add?mode=view&tab=project_add" className={isSelctedTab("project_add")}>
-                    {'Website'}
+                    {'Project'}
                   </CNavLink>
                 </CNavItem>
                 {activeDomainName.length > 0 && (
@@ -162,17 +162,17 @@ const AppBreadcrumb = () => {
                         className={isSelctedTab("article_approval")}
                         href={'#/article/approval/?tab=article_approval&domainId=' + activeDomainId + '&domainName=' + activeDomainName + '&domainIp=' + activeDomainIp}
                       >
-                        Approval Article
+                        Approval Video
                       </CNavLink>
                     </CNavItem>
-                    <CNavItem className="px-1">
+                    {/* <CNavItem className="px-1">
                       <CNavLink
                         className={isSelctedTab("article_list")}
                         href={'#/article/list/?tab=article_list&domainId=' + activeDomainId + '&domainName=' + activeDomainName + '&domainIp=' + activeDomainIp}
                       >
-                        Article Pages
+                        Video Pages
                       </CNavLink>
-                    </CNavItem>
+                    </CNavItem> */}
                     <CNavItem className="px-1">
                       <CNavLink className={isSelctedTab("sync_view")} href={'#/sync/view?tab=sync_view&domainId=' + activeDomainId + '&domain=' + activeDomainName + '&domainIp=' + activeDomainIp}>
                         Sync
@@ -185,7 +185,7 @@ const AppBreadcrumb = () => {
                     </CNavItem>
                     {/* <CNavItem className="px-1">
                       <CNavLink className="btn btn-light" href="#" disabled>
-                        Article Theme
+                        Video Theme
                       </CNavLink>
                     </CNavItem> */}
                   </>

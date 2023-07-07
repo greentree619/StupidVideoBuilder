@@ -157,7 +157,7 @@ const Dashboard = () => {
           <CWidgetStatsF
             className="lb-3"
             icon={<CIcon width={24} icon={cilWindow} size="xl" />}
-            title="Create Website"
+            title="Create Project"
             value=""
             color="primary"
           />

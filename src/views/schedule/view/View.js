@@ -159,16 +159,16 @@ const View = (props) => {
       if(ret)
       {
         setScrapCommand('Stop Scrapping')
-        // setAlertMsg('Article Forge Scrapping Schedule started successfully.')
+        // setAlertMsg('Video Forge Scrapping Schedule started successfully.')
         // setAlertColor('success')
-        toast.success('Article Forge Scrapping Schedule started successfully.', alertConfirmOption);
+        toast.success('Video Forge Scrapping Schedule started successfully.', alertConfirmOption);
       }
       else
       {
         setScrapCommand('Start Scrapping')
-        // setAlertMsg('Article Forge Scrapping Schedule stopped.')
+        // setAlertMsg('Video Forge Scrapping Schedule stopped.')
         // setAlertColor('success')
-        toast.success('Article Forge Scrapping Schedule stopped.', alertConfirmOption);
+        toast.success('Video Forge Scrapping Schedule stopped.', alertConfirmOption);
       }
     }
     else

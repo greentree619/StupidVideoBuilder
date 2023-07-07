@@ -530,7 +530,7 @@ class ApprovalBase extends Component {
           <CCardHeader>
             <CContainer>
               <CRow>
-                <CCol className="align-self-start">Article List</CCol>
+                <CCol className="align-self-start">Video List</CCol>
                 <CCol className="align-self-end col-5">
                   <CFormInput
                     type="text"

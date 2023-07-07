@@ -103,16 +103,16 @@ const Setting = (props) => {
 
     const response = await fetch(`${process.env.REACT_APP_SERVER_URL}setting/afsetting`, requestOptions)
     // setAlertColor('danger')
-    // setAlertMsg('Faild to update Article Forge Setting unfortunatley.')
+    // setAlertMsg('Faild to update Video Forge Setting unfortunatley.')
     let ret = await response.json()
     if (response.status === 200 && ret) {
-      // setAlertMsg('Updated Article Forge Setting successfully.')
+      // setAlertMsg('Updated Video Forge Setting successfully.')
       // setAlertColor('success')
-      toast.success('Updated Article Forge Setting successfully.', alertConfirmOption);
+      toast.success('Updated Video Forge Setting successfully.', alertConfirmOption);
     }
     else
     {
-      toast.error('Faild to update Article Forge Setting unfortunatley.', alertConfirmOption);
+      toast.error('Faild to update Video Forge Setting unfortunatley.', alertConfirmOption);
     }
     // setAlarmVisible(true)
   }
