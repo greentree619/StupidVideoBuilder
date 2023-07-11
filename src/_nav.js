@@ -298,7 +298,7 @@ const _nav = [
   },
   {
     component: CNavTitle,
-    name: 'Websites',
+    name: 'Projects',
   },
   {
     component: CNavItem,

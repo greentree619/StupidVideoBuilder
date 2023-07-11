@@ -172,7 +172,7 @@ class DnsBase extends Component {
           <thead>
             <tr>
               <th className='text-center'>Id</th>
-              <th className='text-center'>Domain</th>
+              <th className='text-center'>Project</th>
               <th className='text-center'>Content</th>
               <th className='text-center'>Type</th>
               <th className='text-center'>TTL</th>

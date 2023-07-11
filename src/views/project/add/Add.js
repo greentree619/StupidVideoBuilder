@@ -459,7 +459,7 @@ const Add = (props) => {
         <CRow xs={{ gutterX: 5 }}>
           <CCol>
             <CCard className="mb-4">
-              <CCardHeader>New/Update Domain</CCardHeader>
+              <CCardHeader>New/Update Project</CCardHeader>
               <CCardBody>
                 <CAlert
                   color={alertColor}
@@ -483,22 +483,14 @@ const Add = (props) => {
                             <CRow>
                               <CCol>
                                 <CFormLabel htmlFor="projectNameFormControlInput">
-                                  Domain
+                                  Project
                                 </CFormLabel>
-                              </CCol>
-                              <CCol className={simpleMode ? 'd-none' : 'mb-3'}>
-                                <CFormCheck id="useHttps" 
-                                  checked={useHttps} 
-                                  onChange={() => setUseHttps(!useHttps)}
-                                  label="Enable https"
-                                  disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}
-                                />
                               </CCol>
                             </CRow>
                             <CFormInput
                               type="text"
                               id="projectNameFormControlInput"
-                              placeholder="www.domain.com"
+                              placeholder="Youtube channel"
                               aria-label="Domain"
                               required
                               onChange={(e) => inputChangeHandler(setProjectName, e)}
@@ -507,90 +499,6 @@ const Add = (props) => {
                             />
                           </CCol>
                         </CRow>
-                      </div>
-                      <div className={simpleMode ? 'd-none' : 'mb-3'}>
-                        <CRow>
-                          <CFormLabel htmlFor="ipSelect" className="col-sm-4 col-form-label">IP Address</CFormLabel>
-                          <CCol sm={8} >
-                            <CFormSelect id="ipSelect" value={ipAddress} 
-                              onChange={(obj) => handleIpAddrClick(obj.target.value)} size="sm" 
-                              className="mb-3" aria-label="Small select example"
-                              disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}>
-                              {
-                                ipAddressMap.map((ipAddr, index) => {
-                                    return (<option key={index} value={ipAddr.value}>{ipAddr.ip}</option>)
-                                  })
-                              }
-                            </CFormSelect>
-                          </CCol>
-                        </CRow>
-                      </div>
-                      {ipAddress === "0.0.0.0" && (
-                        <div className={simpleMode ? 'd-none' : 'mb-3'}>
-                          <CRow>
-                            <CCol className='mb-8'>
-                              <CFormSelect id="bucketSelect" value={s3BucketName} 
-                                onChange={(obj) => onChangedBucketName(obj.target.value)} 
-                                size="sm" className="mb-3" aria-label="Select Bucket"
-                                disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}>
-                                  <option value="-">No selected</option>
-                                {
-                                  s3BucketList.map((bucketItem, index) => {
-                                      return (<option key={index} value={bucketItem.name}>{bucketItem.name}</option>)
-                                    })
-                                }
-                              </CFormSelect>
-                            </CCol>
-                            <CCol className='mb-4'>
-                              <CFormSelect id="regionSelect" value={s3BucketRegion} 
-                                onChange={(obj) => setS3BucketRegion(obj.target.value)} 
-                                size="sm" className="mb-3" aria-label="Select Region"
-                                disabled={true}>
-                                {
-                                  globalRegionMap.map((regionItem, index) => {
-                                      return (<option key={index} value={regionItem.value}>{regionItem.region}</option>)
-                                    })
-                                }
-                              </CFormSelect>
-                            </CCol>
-                          </CRow>
-                        </div>
-                      )}
-                      <div className={simpleMode ? 'd-none' : 'd-none'}>
-                        <CFormLabel htmlFor="exampleFormControlInput1">
-                          Search Keyword(can use multiple keywords using &apos;;&apos;)
-                        </CFormLabel>
-                        <CRow>
-                          <CCol className='col-9'>
-                            <CFormInput
-                              type="text"
-                              id="searchKeywordFormControlInput"
-                              placeholder="Search Keyword"
-                              aria-label="Search Keyword"
-                              onChange={(e) => inputChangeHandler(setSearchKeyword, e)}
-                              disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}
-                              value={searchKeyword}
-                            />
-                          </CCol>
-                          <CCol>
-                            <CFormInput type="file"
-                              id="formFile"
-                              onChange={(e) => readKeyFile(e)}
-                              disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'} />
-                          </CCol>
-                        </CRow>
-                      </div>
-                      <div className={simpleMode ? 'd-none' : 'd-none'}>
-                        <CFormLabel htmlFor="exampleFormControlInput1">Questions Count</CFormLabel>
-                        <CFormInput
-                          type="text"
-                          id="questionsCountFormControlInput"
-                          placeholder="50"
-                          onChange={(e) => inputChangeHandler(setQuestionsCount, e)}
-                          required={simpleMode ? false : true}
-                          disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}
-                          value={questionsCount}
-                        />
                       </div>
                       <div className={simpleMode ? 'd-none' : 'mb-3'}>
                         <CRow>
@@ -617,121 +525,21 @@ const Add = (props) => {
                               </CDropdownMenu>
                             </CDropdown>
                           </CCol>
-                          {/* <CCol>
-                            <CFormSelect id="countrySelect"
-                              //onChange={(obj) => setS3BucketRegion(obj.target.value)} 
-                              size="sm" className="mb-3" aria-label="Country">
-                              {
-                                countryMap.map((countryItem, index) => {
-                                    return (<option key={index} value={countryItem.value}>{countryItem.country}</option>)
-                                  })
-                              }
-                            </CFormSelect>
-                          </CCol> */}
                         </CRow>
                       </div>
-                      <CRow className={simpleMode ? 'd-none' : 'mb-3 py-0'}>
-                        <CFormLabel htmlFor="Brandname" className="col-sm-4 col-form-label">Brand Name</CFormLabel>
-                        <CCol sm={8} className={"d-flex align-items-center"}>
-                          <CFormInput type="text" id="Brandname" value={brandName} onChange={(e) => inputChangeHandler(setBrandName, e)}
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
-                        </CCol>
-                        <CCol className={"d-flex justify-content-end"}>
-                            <CFormCheck id="useMetaTitle" 
-                              checked={useTitleByBrandname} 
-                              onChange={() => setUseTitleByBrandname(!useTitleByBrandname)}
-                              label="Use Title Format with 'Title-Brand Name'"
-                              disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}
-                            />
-                        </CCol>
-                      </CRow>
-                      <CRow className={simpleMode ? 'd-none' : 'mb-3 py-0'}>
-                        <CFormLabel htmlFor="StreetAddress" className="col-sm-4 col-form-label">Street Address</CFormLabel>
-                        <CCol sm={8}>
-                          <CFormInput type="text" id="StreetAddress" value={streetAddress} onChange={(e) => inputChangeHandler(setStreetAddress, e)}
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
-                        </CCol>
-                      </CRow>
-                      <CRow className={simpleMode ? 'd-none' : 'mb-3 py-0'}>
-                        <CFormLabel htmlFor="AdrdressLocality" className="col-sm-4 col-form-label">Adrdress Locality</CFormLabel>
-                        <CCol sm={8}>
-                          <CFormInput type="text" id="AdrdressLocality" value={adrdressLocality} onChange={(e) => inputChangeHandler(setAddressLocality, e)}
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
-                        </CCol>
-                      </CRow>
-                      <CRow className={simpleMode ? 'd-none' : 'mb-3 py-0'}>
-                        <CFormLabel htmlFor="AddressRegion" className="col-sm-4 col-form-label">Address Region</CFormLabel>
-                        <CCol sm={8}>
-                          <CFormInput type="text" id="AddressRegion" value={addressRegion} onChange={(e) => inputChangeHandler(setAddressRegion, e)}
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
-                        </CCol>
-                      </CRow>
                     </CCol>
                     <CCol className={simpleMode ? 'd-none' : ''}>
                       <CRow className="mb-3 pt-4">
-                        <CFormLabel htmlFor="PostalCode" className="col-sm-4 col-form-label">Postal Code</CFormLabel>
+                        <CFormLabel htmlFor="PostalCode" className="col-sm-4 col-form-label">Width</CFormLabel>
                         <CCol sm={8}>
                           <CFormInput type="text" id="PostalCode" value={postalCode} onChange={(e) => inputChangeHandler(setPostalCode, e)}
                             disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
                         </CCol>
                       </CRow>
                       <CRow className="mb-3 py-0">
-                        <CFormLabel htmlFor="Country" className="col-sm-4 col-form-label">Country</CFormLabel>
+                        <CFormLabel htmlFor="Country" className="col-sm-4 col-form-label">Hieght</CFormLabel>
                         <CCol sm={8}>
                           <CFormInput type="text" id="Country" value={country} onChange={(e) => inputChangeHandler(setCountry, e)}
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
-                        </CCol>
-                      </CRow>
-                      <CRow className="mb-3 py-0">
-                        <CFormLabel htmlFor="Phone" className="col-sm-4 col-form-label">Phone</CFormLabel>
-                        <CCol sm={8}>
-                          <CFormInput type="text" id="Phone" value={phone} onChange={(e) => inputChangeHandler(setPhone, e)}
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
-                        </CCol>
-                      </CRow>
-                      <CRow className="mb-3 py-0">
-                        <CFormLabel htmlFor="Website" className="col-sm-4 col-form-label">Website</CFormLabel>
-                        <CCol sm={8}>
-                          <CFormInput type="text" id="Website" value={website} onChange={(e) => inputChangeHandler(setWebsite, e)}
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
-                        </CCol>
-                      </CRow>
-                      <CRow className="mb-3 py-0">
-                        <CFormLabel htmlFor="DescriptionofCompany" className="col-sm-4 col-form-label">Description of Company</CFormLabel>
-                        <CCol sm={8}>
-                          <CFormInput type="text" id="DescriptionofCompany" value={descriptionOfCompany} onChange={(e) => inputChangeHandler(setDescriptionOfCompany, e)}
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
-                        </CCol>
-                      </CRow>
-                      <CRow className="mb-3 py-0">
-                        <CFormLabel htmlFor="OpeningHours" className="col-sm-4 col-form-label">Opening Hours</CFormLabel>
-                        <CCol sm={8}>
-                          <CFormInput type="text" id="OpeningHours" value={openingHours} onChange={(e) => inputChangeHandler(setOpeningHours, e)}
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
-                        </CCol>
-                      </CRow>
-                      <CRow className="mb-3 py-0">
-                        <CFormLabel htmlFor="ArticleImageNumber" className="col-sm-4 col-form-label">Video Image Number</CFormLabel>
-                        <CCol sm={4}>
-                          <CFormInput type="number" id="ArticleImageNumber" value={imageNumber} onChange={(e) => inputChangeHandler(setImageNumber, e)}
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
-                        </CCol>
-                        <CCol sm={4}>
-                          <CFormSelect id="sourceSelect" value={scrappingFrom} 
-                            onChange={(obj) => setScrappingFrom(Number(obj.target.value))} size="sm" 
-                            className="mb-3" aria-label="Small select example"
-                            disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}>
-                            <option value='0'>Pixabay</option>
-                            <option value='1'>OpenAI</option>
-                            <option value='2'>Pixabay & OpenAI</option>
-                          </CFormSelect>
-                        </CCol>
-                      </CRow>
-                      <CRow className="mb-3 py-0">
-                        <CFormLabel htmlFor="insteadOfTitle" className="col-sm-4 col-form-label">Video Image Keyword Instead of Title</CFormLabel>
-                        <CCol sm={8}>
-                          <CFormInput type="text" id="insteadOfTitle" value={insteadOfTitle} placeholder='Split each keyword by ";"'
-                            onChange={(e) => inputChangeHandler(setInsteadOfTitle, e)}
                             disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
                         </CCol>
                       </CRow>
@@ -741,7 +549,7 @@ const Add = (props) => {
                   <div className="mb-3">
                     {location.state != null && !simpleMode && (
                       <CButton type="button" onClick={() => navigate('/project/add')}>
-                        New Domain
+                        New Project
                       </CButton>
                     )}
                     &nbsp;

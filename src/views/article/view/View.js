@@ -201,26 +201,6 @@ const View = (props) => {
       <CCard className="mb-4">
         <CCardHeader>Video View</CCardHeader>
         <CCardBody>
-        {/* <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        /> */}
-          <CAlert
-            color={alertColor}
-            dismissible
-            visible={alarmVisible}
-            onClose={() => setAlarmVisible(false)}
-          >
-            {alertMsg}
-          </CAlert>
           <CForm className="row g-3 needs-validation">
             <div className="mb-3">
               <CFormLabel htmlFor="exampleFormControlInput1">Title</CFormLabel>
@@ -233,141 +213,9 @@ const View = (props) => {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-            <div className="mb-3">
-              <CRow>
-                <CCol>
-                  <CFormLabel htmlFor="metaTitle">Meta Title</CFormLabel>
-                  <CFormInput
-                    type="text"
-                    id="metaTitle"
-                    aria-label="metaTitle"
-                    value={metaTitle}
-                    onChange={(e) => setMetaTitle(e.target.value)}
-                  />
-                </CCol>
-                <CCol>
-                  <CFormCheck id="useMetaTitle" 
-                    checked={useTitleByBrandname}
-                    className="pt-5" 
-                    label="Use Mete Title Format with <Title>-<Brand Name>"
-                    onChange={(e) => {
-                      setUseTitleByBrandname(e.target.checked)
-                      if( e.target.checked )
-                      {
-                        setMetaTitle(title + "-" + activeProject.contactInfo.brandname);
-                      }
-                      else
-                      {
-                        setMetaTitle('');
-                      }
-                    }}
-                  />
-                </CCol>
-              </CRow>
-            </div>
-            <div className="mb-3">
-              <CRow>
-                <CCol>
-                  <CFormLabel htmlFor="metaDescription">Meta Description</CFormLabel>
-                  <CFormInput
-                    type="text"
-                    id="metaDescription"
-                    aria-label="metaDescription"
-                    value={metaDescription}
-                    onChange={(e) => setMetaDescription(e.target.value)}
-                  />
-                </CCol>
-                <CCol>
-                  <CFormLabel htmlFor="metaKeywords">Meta Keywords</CFormLabel>
-                  <CFormInput
-                    type="text"
-                    id="metaKeywords"
-                    aria-label="metaKeywords"
-                    value={metaKeywords}
-                    onChange={(e) => setMetaKeywords(e.target.value)}
-                  />
-                </CCol>
-                <CCol>
-                  <CFormLabel htmlFor="metaAuthor">Meta Author</CFormLabel>
-                  <CFormInput
-                    type="text"
-                    id="metaAuthor"
-                    aria-label="metaAuthor"
-                    value={metaAuthor}
-                    onChange={(e) => setMetaAuthor(e.target.value)}
-                  />
-                </CCol>
-              </CRow>
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="exampleFormControlInput1">Body</CFormLabel>
-              <SunEditor
-                getSunEditorInstance={getBodySunEditorInstance}
-                setContents={content} 
-                onChange={(contents, core) => {
-                  setContent(contents)
-                  //console.log({ event, editor, data })
-                }}
-                setOptions={{
-                    height: 200,
-                    plugins: {...plugins, pixabayImageGallery, openAIImageGallery, openAIVideoLibrary},
-                    katex: katex,
-                    //imageGalleryUrl: "",
-                    buttonList: [
-                        ['undo', 'redo'],
-                        ['font', 'fontSize', 'formatBlock'],
-                        ['paragraphStyle', 'blockquote'],
-                        ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-                        ['fontColor', 'hiliteColor', 'textStyle'],
-                        ['removeFormat'],
-                        '/', // Line break
-                        ['outdent', 'indent'],
-                        ['align', 'horizontalRule', 'list', 'lineHeight'],
-                        ['table', 'link', 'image', 'video', 'audio' ,'math'], // You must add the 'katex' library at options to use the 'math' plugin.
-                        ['pixabayImageGallery', 'openAIImageGallery'/*, 'openAIVideoLibrary'*/], // You must add the "imageGalleryUrl".
-                        ['fullScreen', 'showBlocks', 'codeView'],
-                        ['preview', 'print'],
-                        ['save', 'template'],
-                        /** ['dir', 'dir_ltr', 'dir_rtl'] */ // "dir": Toggle text direction, "dir_ltr": Right to Left, "dir_rtl": Left to Right
-                    ]
-              }}/>
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="exampleFormControlInput2">Footer</CFormLabel>
-              <SunEditor 
-                getSunEditorInstance={getFooterSunEditorInstance}
-                setContents={footer} 
-                onChange={(contents, core) => {
-                  setFooter(contents)
-                  //console.log({ event, editor, data })
-                }}
-                setOptions={{
-                    height: 200,
-                    plugins: {...plugins, pixabayImageGallery, openAIImageGallery, openAIVideoLibrary},
-                    katex: katex,
-                    //imageGalleryUrl: "",
-                    buttonList: [
-                        ['undo', 'redo'],
-                        ['font', 'fontSize', 'formatBlock'],
-                        ['paragraphStyle', 'blockquote'],
-                        ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-                        ['fontColor', 'hiliteColor', 'textStyle'],
-                        ['removeFormat'],
-                        '/', // Line break
-                        ['outdent', 'indent'],
-                        ['align', 'horizontalRule', 'list', 'lineHeight'],
-                        ['table', 'link', 'image', 'video', 'audio' ,'math'], // You must add the 'katex' library at options to use the 'math' plugin.
-                        ['pixabayImageGallery', 'openAIImageGallery'/*, 'openAIVideoLibrary'*/], // You must add the "imageGalleryUrl".
-                        ['fullScreen', 'showBlocks', 'codeView'],
-                        ['preview', 'print'],
-                        ['save', 'template'],
-                        /** ['dir', 'dir_ltr', 'dir_rtl'] */ // "dir": Toggle text direction, "dir_ltr": Right to Left, "dir_rtl": Left to Right
-                    ]
-              }}/>
-            </div>
             <CCard style={{ width: '100%' }}>
               <CCardBody>
-                <CCardTitle>Video Images</CCardTitle>
+                <CCardTitle>Video Background Images</CCardTitle>
                 <CCardText>
                   <div className="clearfix">
                   {thumbImageArray.map((img, idx) => {
@@ -383,6 +231,21 @@ const View = (props) => {
               </CCardBody>
             </CCard>
             <div className="mb-3">
+              <CRow>
+                <CCol>
+                  <CFormLabel htmlFor="metaDescription">Video Script</CFormLabel>
+                  <CFormInput
+                    type="text"
+                    id="metaDescription"
+                    aria-label="metaDescription"
+                    value={metaDescription}
+                    onChange={(e) => setMetaDescription(e.target.value)}
+                  />
+                </CCol>
+              </CRow>
+            </div>
+            
+            <div className="mb-3">
               <CButton type="button" onClick={() => navigate(-1)}>
                 Back
               </CButton>
@@ -394,15 +257,15 @@ const View = (props) => {
           </CForm>
         </CCardBody>
       </CCard>
-      <AddImagesComponent 
-        ref = {addImagesComponent}
-        title = {title}
-        addImgVisible = {addImgVisible}
-        setAddImgVisible = {setAddImgVisible}
-        imageArray = {imageArray}
-        setImageArray = {setImageArray}
-        thumbImageArray = {thumbImageArray}
-        setThumbImageArray = {setThumbImageArray}
+      <AddImagesComponent
+        ref={addImagesComponent}
+        title={title}
+        addImgVisible={addImgVisible}
+        setAddImgVisible={setAddImgVisible}
+        imageArray={imageArray}
+        setImageArray={setImageArray}
+        thumbImageArray={thumbImageArray}
+        setThumbImageArray={setThumbImageArray}
       />
     </>
   )

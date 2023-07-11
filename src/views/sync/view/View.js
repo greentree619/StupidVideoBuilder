@@ -229,7 +229,7 @@ class ListBase extends Component {
     )
     return (
       <CCard className="mb-4">
-        <CCardHeader>All Articles</CCardHeader>
+        <CCardHeader>All Videos</CCardHeader>
         <CCardBody>{contents}</CCardBody>
       </CCard>
     )

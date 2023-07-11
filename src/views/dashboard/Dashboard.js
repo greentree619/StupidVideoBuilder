@@ -47,6 +47,7 @@ import {
   cilUser,
   cilUserFemale,
   cibCanva,
+  cilMovie,
 } from '@coreui/icons'
 import { Outlet, Link } from 'react-router-dom'
 
@@ -156,7 +157,7 @@ const Dashboard = () => {
         <Link to={`/project/add`} state={{ simple_mode: true }}>
           <CWidgetStatsF
             className="lb-3"
-            icon={<CIcon width={24} icon={cilWindow} size="xl" />}
+            icon={<CIcon width={24} icon={cilMovie} size="xl" />}
             title="Create Project"
             value=""
             color="primary"
@@ -168,7 +169,7 @@ const Dashboard = () => {
           <Link to={`/project/add`} state={{ mode: 'VIEW', project: project }}>
             <CWidgetStatsF
               className="lb-3"
-              icon={<CIcon width={24} icon={cilWindow} size="xl" />}
+              icon={<CIcon width={24} icon={cilMovie} size="xl" />}
               title={project.name}
               value={<><CBadge color={(prjState[project.id] != null && prjState[project.id].isOnScrapping) ? "success" : "secondary"} size="sm">keywords</CBadge>
                         <CBadge color={(prjState[project.id] != null && prjState[project.id].isOnAFScrapping) ? "success" : "secondary"} size="sm">articles</CBadge>

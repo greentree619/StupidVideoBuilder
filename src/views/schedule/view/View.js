@@ -335,7 +335,7 @@ const View = (props) => {
       <CRow>
         <CCol>
           <CCard className="mb-4">
-            <CCardHeader>Article Forge Schedule</CCardHeader>
+            <CCardHeader>Script Scrap Schedule</CCardHeader>
             <CCardBody>
               <CForm
                 className="row g-3 needs-validation"
@@ -423,7 +423,7 @@ const View = (props) => {
         </CCol>
         <CCol>
         <CCard className="mb-4">
-            <CCardHeader>Publish Schedule</CCardHeader>
+            <CCardHeader>Youtube Publish Schedule</CCardHeader>
             <CCardBody>
               <CForm
                 className="row g-3 needs-validation"

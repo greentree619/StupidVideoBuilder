@@ -209,7 +209,7 @@ export default class List extends Component {
           <thead>
             <tr>
               <th className='text-center'>Id</th>
-              <th className='text-center'>Domain</th>
+              <th className='text-center'>Project</th>
               <th className='text-center'>Keyword</th>
               <th className='text-center'>Action</th>
             </tr>
@@ -265,7 +265,7 @@ export default class List extends Component {
     )
     return (
       <CCard className="mb-4">
-        <CCardHeader>All Websites</CCardHeader>
+        <CCardHeader>All Projects</CCardHeader>
         <CCardBody>{contents}</CCardBody>
       </CCard>
     )

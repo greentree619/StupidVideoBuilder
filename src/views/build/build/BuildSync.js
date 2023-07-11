@@ -188,8 +188,8 @@ export default class BuildSync extends Component {
           <thead>
             <tr>
               <th className='text-center'>Id</th>
-              <th className='text-center'>Web Site</th>
-              <th className='text-center'>IP</th>
+              <th className='text-center'>Project</th>
+              <th className='text-center'>Youtube Channel</th>
               <th className='text-center'>Action</th>
             </tr>
           </thead>
@@ -227,7 +227,7 @@ export default class BuildSync extends Component {
     )
     return (
       <CCard className="mb-4">
-        <CCardHeader>All Web Sites</CCardHeader>
+        <CCardHeader>All Projects</CCardHeader>
         <CCardBody>{contents}</CCardBody>
       </CCard>
     )
