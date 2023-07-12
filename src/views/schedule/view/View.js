@@ -81,7 +81,7 @@ const View = (props) => {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     }
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project/schedule/${domainId}`, requestOptions)
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/schedule/${domainId}`, requestOptions)
     let ret = await response.json()
     if (response.status === 200 && ret) {
       console.log(ret, ret.data.justNowCount);
@@ -100,7 +100,7 @@ const View = (props) => {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     }
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project/publishSchedule/${domainId}`, requestOptions)
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/publishSchedule/${domainId}`, requestOptions)
     let ret = await response.json()
     if (response.status === 200 && ret && ret.data) {
       //console.log(ret, ret.data.publishJustNowCount);
@@ -147,8 +147,8 @@ const View = (props) => {
   const startScrapping = async (domainId) => {
     location.state.isOnAFScrapping = (location.state.isOnAFScrapping == 'true' ? 'false' : 'true')
     const response = await fetch(
-      scrappingScheduleMode == 0 ? `${process.env.REACT_APP_SERVER_URL}project/startaf/${domainId}/${location.state.scheduleId}`
-                                 : `${process.env.REACT_APP_SERVER_URL}project/startOpenAI/${domainId}/${location.state.scheduleId}`,
+      scrappingScheduleMode == 0 ? `${process.env.REACT_APP_SERVER_URL}video/startaf/${domainId}/${location.state.scheduleId}`
+                                 : `${process.env.REACT_APP_SERVER_URL}video/startOpenAI/${domainId}/${location.state.scheduleId}`,
     )
     // setAlarmVisible(false)
     // setAlertMsg('Unfortunately, scrapping faild.')
@@ -182,7 +182,7 @@ const View = (props) => {
 
   const startPublish = async (domainId) => {
     const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}project/startPublish/${domainId}/${location.state.publishScheduleId}`,
+      `${process.env.REACT_APP_SERVER_URL}video/startPublish/${domainId}/${location.state.publishScheduleId}`,
     )
     // setAlarmVisible(false)
     // setAlertMsg('Unfortunately, Publish Schedule faild.')
@@ -250,7 +250,7 @@ const View = (props) => {
       }),
     }
 
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project/updateSchedule`, requestOptions)
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/updateSchedule`, requestOptions)
     // setAlertColor('danger')
     // setAlertMsg('Faild to update AF schedule unfortunatley.')
     let ret = await response.json()
@@ -294,7 +294,7 @@ const View = (props) => {
       }),
     }
 
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project/updatePublishSchedule`, requestOptions)
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/updatePublishSchedule`, requestOptions)
     // setAlertColor('danger')
     // setAlertMsg('Faild to update publish schedule unfortunatley.')
     let ret = await response.json()

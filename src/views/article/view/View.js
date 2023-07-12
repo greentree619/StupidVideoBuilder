@@ -62,19 +62,13 @@ const View = (props) => {
   const [alertColor, setAlertColor] = useState('success')
   const [alertMsg, setAlertMsg] = useState('')
   const [title, setTitle] = useState('')
-  const [metaTitle, setMetaTitle] = useState('')
-  const [article, setArticle] = useState({})
   const [content, setContent] = useState('')
-  const [footer, setFooter] = useState('')
-  const [metaDescription, setMetaDescription] = useState('')
-  const [metaKeywords, setMetaKeywords] = useState('')
-  const [metaAuthor, setMetaAuthor] = useState('')
+  const [videoDetail, setVideoDetail] = useState({})
   const [pixabayURL, setPixabayURL] = useState(`https://pixabay.com/api/?key=14748885-e58fd7b3b1c4bf5ae18c651f6&q=&image_type=photo&min_width=${process.env.REACT_APP_PIXABAY_MIN_WIDTH}&min_height=${process.env.REACT_APP_PIXABAY_MIN_HEIGHT}&per_page=100&page=1`)
-  const [useTitleByBrandname, setUseTitleByBrandname] = useState(activeProject.contactInfo.useTitleByBrandname)
   const [addImgVisible, setAddImgVisible] = useState(false)
   const [imageGallery, setImageGallery] = useState([])
-  const [imageArray, setImageArray] = useState([])
-  const [thumbImageArray, setThumbImageArray] = useState([])
+  const [image, setImage] = useState('')
+  const [thumbImage, setThumbImage] = useState('')
   const addImagesComponent = useRef()
   
   console.log(activeProject)
@@ -82,37 +76,21 @@ const View = (props) => {
   useEffect(() => {
     const getFetch = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}article/fromid/` + location.state.article.id,
+        `${process.env.REACT_APP_SERVER_URL}video/byTitle/` + activeProject.id + `/` + location.state.article.title,
       )
       const data = await response.json()
-      //console.log(data)
+      console.log(data)
       setTitle(data.data.title)
-      if (data.data.metaTitle != null) setMetaTitle(data.data.metaTitle)
-      if (data.data.metaDescription != null) setMetaDescription(data.data.metaDescription)
-      if (data.data.metaKeywords != null) setMetaKeywords(data.data.metaKeywords)
-      if (data.data.metaAuthor != null) setMetaAuthor(data.data.metaAuthor)
       if (data.data.content != null) setContent(data.data.content)
-      if (data.data.footer != null) setFooter(data.data.footer)
-      if (data.data.imageArray != null) setImageArray(data.data.imageArray)
-      if (data.data.thumbImageArray != null) setThumbImageArray(data.data.thumbImageArray)
-
-      if( useTitleByBrandname )
-      {
-        setMetaTitle(data.data.title + "-" + activeProject.contactInfo.brandname);
-      }
-      setArticle(data.data)
+      if (data.data.backgroundImage != null) setImage(data.data.backgroundImage)
+      if (data.data.backgroundThumbImage != null) setThumbImage(data.data.backgroundThumbImage)
+      setVideoDetail(data.data)
 
       let q = data.data.title.replaceAll(' ', '+').replaceAll('?', '')
       console.log(data.data.title, q)
       let openAIKeyword = data.data.title.replaceAll('?', '')
       console.log(data.data.title, openAIKeyword)
       setPixabayURL()
-      footEditor.current.core.options.imageGalleryLoadURL = 'https://pixabay.com/api/?key=27944002-ca9bbda02c769f32ad5769e81&q=' + q + `&image_type=photo&min_width=${process.env.REACT_APP_PIXABAY_MIN_WIDTH}&min_height=${process.env.REACT_APP_PIXABAY_MIN_HEIGHT}&per_page=100&page=1`
-      bodyEditor.current.core.options.imageGalleryLoadURL = 'https://pixabay.com/api/?key=27944002-ca9bbda02c769f32ad5769e81&q=' + q + `&image_type=photo&min_width=${process.env.REACT_APP_PIXABAY_MIN_WIDTH}&min_height=${process.env.REACT_APP_PIXABAY_MIN_HEIGHT}&per_page=100&page=1`
-      footEditor.current.core.options.openAIImageLoadURL = `${process.env.REACT_APP_SERVER_URL}openAI/image/10?prompt=${openAIKeyword}`;
-      bodyEditor.current.core.options.openAIImageLoadURL = `${process.env.REACT_APP_SERVER_URL}openAI/image/10?prompt=${openAIKeyword}`;
-      footEditor.current.core.options.openAIVideoLoadURL = `${process.env.REACT_APP_SERVER_URL}openAI/video/10?prompt=${openAIKeyword}`;
-      bodyEditor.current.core.options.openAIVideoLoadURL = `${process.env.REACT_APP_SERVER_URL}openAI/video/10?prompt=${openAIKeyword}`;
       //console.log(footEditor.current.core.options.imageGalleryLoadURL)
     }
     getFetch()
@@ -124,30 +102,17 @@ const View = (props) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         id: location.state.article.id,
-        metaDescription: metaDescription,
-        metaKeywords: metaKeywords,
-        metaAuthor: metaAuthor,
         content: content,
-        metaTitle: (metaTitle.length == 0 ? title : metaTitle),
-        footer: footer,
-        state: article.state,
-        imageArray: imageArray,
-        thumbImageArray: thumbImageArray,
+        state: videoDetail.state,
+        backgroundImage: image,
+        backgroundThumbImage: thumbImage,
       }),
     }
 
     console.log(location.state.projectInfo);
-
-    var s3Host = loadFromLocalStorage('s3host')
-    var s3Name = s3Host.name == null ? "" : s3Host.name;
-    var s3Region = s3Host.region == null ? "" : s3Host.region;
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}article/update_content/${location.state.projectInfo.projectid}/${location.state.projectInfo.domainName}/${location.state.projectInfo.domainIp}?s3Name=${s3Name}&region=${s3Region}`, requestOptions)
-    // setAlertColor('danger')
-    // setAlertMsg('Faild to update content unfortunatley.')
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/update_content/${location.state.projectInfo.projectid}`, requestOptions)
     let ret = await response.json()
     if (response.status === 200 && ret) {
-      // setAlertMsg('Video content is updated successfully.')
-      // setAlertColor('success')
       toast.success('Video content is updated successfully.', alertConfirmOption);
     }
     else
@@ -187,13 +152,13 @@ const View = (props) => {
 
   const deleteImage = async (idx) => {
     console.log("deleteImage=>", idx)
-    var tmpimgAry = [...imageArray]
-    var tmpThumImgAry = [...thumbImageArray]
-    tmpimgAry.splice(idx, 1)
-    tmpThumImgAry.splice(idx, 1)
-    setImageArray(tmpimgAry)
-    setThumbImageArray(tmpThumImgAry)
-    console.log(thumbImageArray)
+    // var tmpimgAry = [...imageArray]
+    // var tmpThumImgAry = [...thumbImageArray]
+    // tmpimgAry.splice(idx, 1)
+    // tmpThumImgAry.splice(idx, 1)
+    setImage('')
+    setThumbImage('')
+    console.log(thumbImage)
   }
 
   return (
@@ -218,13 +183,9 @@ const View = (props) => {
                 <CCardTitle>Video Background Images</CCardTitle>
                 <CCardText>
                   <div className="clearfix">
-                  {thumbImageArray.map((img, idx) => {
-                    //console.log(img.thumb)
-                    return (
-                      <>
-                        &nbsp;<CImage key={"thumb"+idx} onClick={() => deleteImageConfirm(idx)} align="start" rounded src={((img.substr(0, 10) == "data:image" || img.substr(0, 6) == "https:") ? img : ("data:image/jpeg;base64," + img))} width={80} height={80} />
-                      </>)
-                  })}
+                  {thumbImage != null && (<>
+                      &nbsp;<CImage onClick={() => deleteImageConfirm(0)} align="start" rounded src={((thumbImage.substr(0, 10) == "data:image" || thumbImage.substr(0, 6) == "https:") ? thumbImage : ("data:image/jpeg;base64," + thumbImage))} width={80} height={80} />
+                    </>)}
                     &nbsp;<CImage onClick={() => addImagesComponent.current.showAddImageModal()} align="start" rounded src={AddImage} width={80} height={80} />
                   </div>                  
                 </CCardText>
@@ -233,14 +194,14 @@ const View = (props) => {
             <div className="mb-3">
               <CRow>
                 <CCol>
-                  <CFormLabel htmlFor="metaDescription">Video Script</CFormLabel>
-                  <CFormInput
-                    type="text"
-                    id="metaDescription"
-                    aria-label="metaDescription"
-                    value={metaDescription}
-                    onChange={(e) => setMetaDescription(e.target.value)}
-                  />
+                  <CFormTextarea
+                    id="scriptTextArea"
+                    label="Video Script"
+                    rows={5}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    text="Must be 8-20 words long."
+                  ></CFormTextarea>
                 </CCol>
               </CRow>
             </div>
@@ -257,7 +218,7 @@ const View = (props) => {
           </CForm>
         </CCardBody>
       </CCard>
-      <AddImagesComponent
+      {/* <AddImagesComponent
         ref={addImagesComponent}
         title={title}
         addImgVisible={addImgVisible}
@@ -266,7 +227,7 @@ const View = (props) => {
         setImageArray={setImageArray}
         thumbImageArray={thumbImageArray}
         setThumbImageArray={setThumbImageArray}
-      />
+      /> */}
     </>
   )
 }

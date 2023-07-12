@@ -147,7 +147,7 @@ class ApprovalBase extends Component {
     }
 
     console.log(this.state.projectInfo, this.state.projectInfo.projectid);
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}article/scrapArticleManual/${mode}/` + this.state.projectInfo.projectid + `/${articleIds}`, requestOptions)
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/scrapArticleManual/${mode}/` + this.state.projectInfo.projectid + `/${articleIds}`, requestOptions)
     // this.setState({
     //   alarmVisible: false,
     //   alertMsg: 'Failed to scrapping from AF manually. Please check If AF Scheduleing is running. To use this feature must be to be off AF Scheduling',
@@ -179,7 +179,7 @@ class ApprovalBase extends Component {
         _id: _id,
       }),
     }
-    fetch(`${process.env.REACT_APP_SERVER_URL}article/${_id}`, requestOptions)
+    fetch(`${process.env.REACT_APP_SERVER_URL}video/delete/${_id}`, requestOptions)
       .then((res) => {
         if (res.status === 200) {
           let tmpData = [...this.state.articles]
@@ -228,7 +228,7 @@ class ApprovalBase extends Component {
     var s3Host = loadFromLocalStorage('s3host')
     var s3Name = s3Host.name == null ? "" : s3Host.name;
     var s3Region = s3Host.region == null ? "" : s3Host.region;
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}article/UpdateBatchState/${this.state.projectInfo.projectid}/${this.state.projectInfo.domainName}/${this.state.projectInfo.domainIp}/${articleIds}/${articleState}?s3Name=${s3Name}&region=${s3Region}`, requestOptions)
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/updateBatchState/${this.state.projectInfo.projectid}/${this.state.projectInfo.domainName}/${this.state.projectInfo.domainIp}/${articleIds}/${articleState}?s3Name=${s3Name}&region=${s3Region}`, requestOptions)
     // this.setState({
     //   alarmVisible: false,
     //   alertMsg: 'Failed to change State.',
@@ -423,12 +423,12 @@ class ApprovalBase extends Component {
           </thead>
           <tbody>
             {helperBar("up", this.state.articles.length)}
-            {this.state.articles.map((article) => {
+            {this.state.articles.map((article, index) => {
               //if (article.content != null && article.content.length > 0)
               {
                 if (this.state.checkedItem[article.id] == null) return
 
-                return (<tr key={article.id}>
+                return (<tr key={index}>
                   <td className='text-center'><CFormCheck id={article.id} label={article.id}
                     checked={this.state.checkedItem[article.id].checked}
                     onChange={(e) => {

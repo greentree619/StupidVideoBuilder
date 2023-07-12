@@ -173,11 +173,11 @@ const AppBreadcrumb = () => {
                         Video Pages
                       </CNavLink>
                     </CNavItem> */}
-                    <CNavItem className="px-1">
+                    {/* <CNavItem className="px-1">
                       <CNavLink className={isSelctedTab("sync_view")} href={'#/sync/view?tab=sync_view&domainId=' + activeDomainId + '&domain=' + activeDomainName + '&domainIp=' + activeDomainIp}>
                         Sync
                       </CNavLink>
-                    </CNavItem>
+                    </CNavItem> */}
                     <CNavItem className="px-1">
                       <CNavLink className={isSelctedTab("log_view")} href={'#/log/view?tab=log_view&domainId=' + activeDomainId + '&domain=' + activeDomainName + '&domainIp=' + activeDomainIp}>
                         Log

@@ -84,7 +84,7 @@ const AppHeader = () => {
     while( true )
     {
       const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}article/` +
+        `${process.env.REACT_APP_SERVER_URL}video/` +
           (projectId != '' ? projectId + '/0/' : '') +
           curPage +
           '/50?keyword=',

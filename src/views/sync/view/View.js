@@ -190,11 +190,11 @@ class ListBase extends Component {
             </tr>
           </thead>
           <tbody>
-            {articles.map((article) => {
+            {articles.map((article, index) => {
               //Omitted if (article.content != null && article.content.length > 0)
               {
                 return (
-                  <tr key={article.id}>
+                  <tr key={index}>
                     <td className='text-center'>{article.id}</td>
                     <td>
                         {article.title}
