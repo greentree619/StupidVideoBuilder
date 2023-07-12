@@ -120,37 +120,23 @@ const Keyword = (props) => {
   }
 
   async function updateProject() {
-    var s3Host = loadFromLocalStorage('s3host')
-    //console.log("location.state=>", location.state)
-    var s3Name = (s3Host.name == null || s3Host.name.length == 0) ? location.state.project.name : s3Host.name;
-    var s3Region = s3Host.region == null ? "us-east-2" : s3Host.region;
-
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         id: location.state ? location.state.project.id : '-1',
         name: location.state.project.name,
-        ip: location.state.project.ip,
-        s3BucketName: s3Name,
-        s3BucketRegion: s3Region,
         keyword: searchKeyword,
         quesionscount: questionsCount,
-        contactInfo: location.state.project.contactInfo,
         language: location.state.project.language,
         languageString: location.state.project.languageString,
       }),
     }
 
     console.log( requestOptions );
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project`, requestOptions)
-    // setAlertColor('danger')
-    // setAlertMsg('Faild to update unfortunatley.')
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video`, requestOptions)
     let ret = await response.json()
     if (response.status === 200 && ret.result) {
-      // setAlertMsg('Updated scrap information successfully.')
-      // setAlertColor('success')
-
       location.state.project.keyword = searchKeyword
       location.state.project.quesionsCount = questionsCount
       dispatch({ type: 'set', activeProject: location.state.project })
@@ -169,7 +155,7 @@ const Keyword = (props) => {
     keyword = keyword.replaceAll(';', '&')
     keyword = keyword.replaceAll('?', ';')
     const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}project/serpapi/` + _id + '/' + keyword + '/' + count,
+      `${process.env.REACT_APP_SERVER_URL}video/serpapi/` + _id + '/' + keyword + '/' + count,
     )
     // setAlarmVisible(false)
     // setAlertMsg('Unfortunately, scrapping faild.')
@@ -187,13 +173,13 @@ const Keyword = (props) => {
     // setAlarmVisible(true)
   }
 
-  async function addManualArticleByTitle()
+  async function addManualVideoByTitle()
   {
     var kwd = manualSearchKeyword
     kwd = kwd.replaceAll(';', '&')
     kwd = kwd.replaceAll('?', ';')
     const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}article/addArticlesByTitle/` + location.state.project.id + '/' + kwd,
+      `${process.env.REACT_APP_SERVER_URL}video/addArticlesByTitle/` + location.state.project.id + '/' + kwd,
     )
     // setAlarmVisible(false)
     // setAlertMsg('Unfortunately, To adding manual article faild.')
@@ -211,13 +197,13 @@ const Keyword = (props) => {
     // setAlarmVisible(true)
   }
 
-  async function addManualArticleByFileTitle()
+  async function addManualVideoByFileTitle()
   {
     var kwd = fileSearchKeyword
     kwd = kwd.replaceAll(';', '&')
     kwd = kwd.replaceAll('?', ';')
     const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}article/addArticlesByTitle/` + location.state.project.id + '/' + kwd,
+      `${process.env.REACT_APP_SERVER_URL}video/addArticlesByTitle/` + location.state.project.id + '/' + kwd,
     )
     // setAlarmVisible(false)
     // setAlertMsg('Unfortunately, To adding manual article faild.')
@@ -243,18 +229,6 @@ const Keyword = (props) => {
             <CCard className="mb-4">
               <CCardHeader>Keyword Management</CCardHeader>
               <CCardBody>
-                {/* <ToastContainer
-                  position="top-right"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="colored"
-                /> */}
                 <CAlert
                   color={alertColor}
                   dismissible
@@ -378,7 +352,7 @@ const Keyword = (props) => {
                     </div>
                     <div className={'mb-12 d-grid gap-2 col-6 mx-auto'}>
                       <CButton type="button" onClick={() =>
-                            addManualArticleByTitle()
+                            addManualVideoByTitle()
                           }>Add</CButton>
                     </div>
                   </CTabPane>
@@ -410,7 +384,7 @@ const Keyword = (props) => {
                     </div>
                     <div className={'mb-12 d-grid gap-2 col-6 mx-auto'}>
                       <CButton type="button" onClick={() =>
-                            addManualArticleByFileTitle()
+                            addManualVideoByFileTitle()
                           }>Add</CButton>
                     </div>
                   </CTabPane>

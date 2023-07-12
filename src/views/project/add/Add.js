@@ -55,71 +55,23 @@ const Add = (props) => {
   }
 
   const [validated, setValidated] = useState(false)
-  const [useHttps, setUseHttps] = useState(
-    location.state != null && !simpleMode ? location.state.project.useHttps : false,
-  )
   const [projectName, setProjectName] = useState(
     location.state != null && !simpleMode ? location.state.project.name : '',
   )
-  const [ipAddress, setIpAddress] = useState(
-    location.state != null && !simpleMode ? location.state.project.ip : '0.0.0.0',
+  const [width, setWidth] = useState(
+    location.state != null && !simpleMode ? location.state.project.width : 400,
   )
-  const [s3BucketName, setS3BucketName] = useState(
-    location.state != null && !simpleMode ? location.state.project.s3BucketName : '',
+  const [height, setHeight] = useState(
+    location.state != null && !simpleMode ? location.state.project.height : 300,
   )
-  const [s3BucketRegion, setS3BucketRegion] = useState(
-    location.state != null && !simpleMode ? location.state.project.s3BucketRegion : '',
+  const [youtubeChannel, setYoutubeChannel] = useState(
+    location.state != null && !simpleMode ? location.state.project.youtubeChannel : '',
   )
   const [searchKeyword, setSearchKeyword] = useState(
     location.state != null && !simpleMode ? location.state.project.keyword : '',
   )
   const [questionsCount, setQuestionsCount] = useState(
     location.state != null && !simpleMode ? location.state.project.quesionsCount : 50,
-  )
-  const [brandName, setBrandName] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.brandname : '',
-  )
-  const [useTitleByBrandname, setUseTitleByBrandname] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.useTitleByBrandname : false,
-  )
-  const [streetAddress, setStreetAddress] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.streetAddress : '',
-  )
-  const [adrdressLocality, setAddressLocality] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.adrdressLocality : '',
-  )
-  const [addressRegion, setAddressRegion] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.addressRegion : '',
-  )
-  const [postalCode, setPostalCode] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.postalCode : '',
-  )
-  const [country, setCountry] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.country : '',
-  )
-  const [phone, setPhone] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.phone : '',
-  )
-  const [website, setWebsite] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.website : '',
-  )
-  const [descriptionOfCompany, setDescriptionOfCompany] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.descriptionOfCompany : '',
-  )
-  const [openingHours, setOpeningHours] = useState(
-    location.state != null && !simpleMode ? location.state.project.contactInfo.openingHours : '',
-  )
-
-  const [scrappingFrom, setScrappingFrom] = useState(
-    location.state != null && !simpleMode ? location.state.project.imageAutoGenInfo.scrappingFrom : 0,
-  )
-
-  const [imageNumber, setImageNumber] = useState(
-    location.state != null && !simpleMode ? location.state.project.imageAutoGenInfo.imageNumber : 0,
-  )
-
-  const [insteadOfTitle, setInsteadOfTitle] = useState(
-    location.state != null && !simpleMode ? location.state.project.imageAutoGenInfo.insteadOfTitle : '',
   )
 
   const [alarmVisible, setAlarmVisible] = useState(false)
@@ -137,15 +89,6 @@ const Add = (props) => {
   const [isOnAFScrapping, setIsOnAFScrapping] = useState(false)
   const [isOnPublish, setIsOnPublish] = useState(false)
   const [disabledUpdate, setDisabledUpdate] = useState(false)
-  const [ipAddressMap, setIpAddressMap] = useState([
-    { ip: 'AWS S3 Bucket', value: '0.0.0.0' },
-    ])
-  // let ipAddressMap = [
-  //   { ip: 'AWS S3 Bucket', value: '0.0.0.0' },
-  //   { ip: '3.14.14.86', value: '3.14.14.86' },
-  //   { ip: '3.131.110.136', value: '3.131.110.136' },
-  //   { ip: '3.142.69.221', value: '3.142.69.221' },
-  // ]
 
   const handleSubmit = (event) => {
     const form = event.currentTarget
@@ -173,32 +116,13 @@ const Add = (props) => {
     var projInfo = {
       id: location.state && !simpleMode ? location.state.project.id : '-1',
       name: projectName,
-      ip: ipAddress,
-      useHttps: useHttps,
-      s3BucketName: s3BucketName,
-      s3BucketRegion: s3BucketRegion,
+      width: width,
+      height: height,
+      youtubeChannel: youtubeChannel,
       keyword: searchKeyword,
       quesionscount: questionsCount,
       language: languageValue,
       languageString: language,
-      contactInfo:{        
-        brandname: brandName,
-        useTitleByBrandname: useTitleByBrandname,
-        streetAddress: streetAddress,
-        adrdressLocality: adrdressLocality,
-        addressRegion: addressRegion,
-        postalCode: postalCode,
-        country: country,
-        phone: phone,
-        website: website,
-        descriptionOfCompany: descriptionOfCompany,
-        openingHours: openingHours,
-      },
-      imageAutoGenInfo:{
-        scrappingFrom: scrappingFrom,
-        imageNumber: imageNumber,
-        insteadOfTitle: insteadOfTitle,
-      },
     }
 
     const requestOptions = {
@@ -207,7 +131,7 @@ const Add = (props) => {
       body: JSON.stringify(projInfo),
     }
 
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project`, requestOptions)
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video`, requestOptions)
     // setAlertColor('danger')
     // setAlertMsg('Faild to create/update new domain unfortunatley.')
     let ret = await response.json()
@@ -223,9 +147,7 @@ const Add = (props) => {
 
       location.state.project = projInfo
       dispatch({ type: 'set', activeDomainName: location.state.project.name })
-      dispatch({ type: 'set', activeDomainIp: location.state.project.ip })
       dispatch({ type: 'set', activeProject: location.state.project })
-      saveToLocalStorage({name: location.state.project.s3BucketName, region: location.state.project.s3BucketRegion}, 's3host')
 
       if (location.state && !simpleMode)
       {//Because update, update redux project array.
@@ -266,20 +188,6 @@ const Add = (props) => {
     )
   }
 
-  const handleIpAddrClick = (ipAddr) => {
-    setIpAddress(ipAddr)
-    if(ipAddr == "0.0.0.0") setUseHttps( true )
-    //console.log('clicked ' + i + ', state.value = ' + languageValue)
-  }
-
-  const renderIpAddrItem = (ipaddr) => {
-    return (
-      <CDropdownItem key={ipaddr.value} onClick={() => handleIpAddrClick(ipaddr.value)}>
-        {ipaddr.ip}
-      </CDropdownItem>
-    )
-  }
-
   let ActionMode = 'Create'
   if (location.state != null && !simpleMode && location.state.mode == 'EDIT') {
     ActionMode = 'Update'
@@ -313,61 +221,7 @@ const Add = (props) => {
     return 'English'
   }
 
-  async function getZoneInformation() {
-    try {
-      if (location.state != null && location.state.project != null
-        && (location.state.mode == 'VIEW' || location.state.mode == 'EDIT')) {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}dns/byname/${location.state.project.name}`)
-        const data = await response.json()
-        console.log("getZoneInformation", data.result);
-        if (data.result.length > 0) {
-          //console.log(data.result[0].name);
-          //console.log(data.result[0].id);
-          dispatch({ type: 'set', activeZoneName: data.result[0].name })
-          dispatch({ type: 'set', activeZoneId: data.result[0].id })
-          dispatch({ type: 'set', activeZoneStatus: data.result[0].status })
-        }
-        else
-        {
-          dispatch({ type: 'set', activeZoneName: "" })
-          dispatch({ type: 'set', activeZoneId: "" })
-          dispatch({ type: 'set', activeZoneStatus: (location.state.project.ip === "0.0.0.0" ? "active": "") })
-        }
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   useEffect(() => {
-    //   async function loadScrappingStatus()  {
-    //     try {
-    //      if(location.state != null && location.state.project != null 
-    //        && (location.state.mode == 'VIEW' || location.state.mode == 'EDIT')){
-    //        const requestOptions = {
-    //          method: 'GET',
-    //          headers: { 'Content-Type': 'application/json' },
-    //        }
-
-    //        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project/isscrapping/${location.state.project.id}`, requestOptions)
-    //        let ret = await response.json()
-    //        if (response.status === 200 && ret) {
-    //          //console.log(ret);
-    //          setIsOnScrapping(ret.serpapi);
-    //          setIsOnAFScrapping(ret.afapi);
-    //        }
-    //      }
-    //    } catch (e) {
-    //        //console.log(e);
-    //        setIsOnScrapping(false);
-    //        setIsOnAFScrapping(false);
-    //    }
-    //  }
-    //  var refreshIntervalId = setInterval(loadScrappingStatus, 1000);
-    
-    populateEC2IPList()
-    populateBucketNameList()
-
     //Omitted console.log("location.search.length = " + location.search.length, location.state.project)
     dispatch({ type: 'set', activeTab: "project_add" })
     if (location.search.length == 0
@@ -386,35 +240,12 @@ const Add = (props) => {
       }
     }
 
-    getZoneInformation();
     return () => {
       //unmount
       // clearInterval(refreshIntervalId);
       console.log('project scrapping status interval cleared!!!');
     }
   }, [])
-
-  const populateBucketNameList = async () => {
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}s3Bucket/nameList`)    
-    const data = await response.json()
-    if (response.status === 200) {
-      setS3BucketList(data.result);
-    }
-  }
-
-  const populateEC2IPList = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}EC2IPAddress/`,
-    )
-    const data = await response.json()
-    var tmpMap = [{ ip: 'AWS S3 Bucket', value: '0.0.0.0' },]
-    await data.data.map((item, index) => {
-      var tmp2Map = [...tmpMap, { ip: item.ipAddress, value: item.ipAddress }]
-      tmpMap = tmp2Map
-      //console.log(ids, "<--", articleDocumentIds);
-    });
-    setIpAddressMap(tmpMap)
-  }
 
   const readKeyFile = async (e) => {
     e.preventDefault()
@@ -428,17 +259,6 @@ const Add = (props) => {
       setSearchKeyword(tmpKeyword);
     };
     reader.readAsText(e.target.files[0])
-  }
-
-  const onChangedBucketName = async ( name ) => {
-    setS3BucketName(name)
-    setDisabledUpdate(true)
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}s3Bucket/getRegion/${name}`)
-    const data = await response.json()
-    if (response.status === 200) {
-      setS3BucketRegion(data.result)
-    }
-    setDisabledUpdate(false)
   }
 
   return (
@@ -490,8 +310,8 @@ const Add = (props) => {
                             <CFormInput
                               type="text"
                               id="projectNameFormControlInput"
-                              placeholder="Youtube channel"
-                              aria-label="Domain"
+                              placeholder="Project Name"
+                              aria-label="Project Name"
                               required
                               onChange={(e) => inputChangeHandler(setProjectName, e)}
                               disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}
@@ -530,16 +350,16 @@ const Add = (props) => {
                     </CCol>
                     <CCol className={simpleMode ? 'd-none' : ''}>
                       <CRow className="mb-3 pt-4">
-                        <CFormLabel htmlFor="PostalCode" className="col-sm-4 col-form-label">Width</CFormLabel>
+                        <CFormLabel htmlFor="Width" className="col-sm-4 col-form-label">Width</CFormLabel>
                         <CCol sm={8}>
-                          <CFormInput type="text" id="PostalCode" value={postalCode} onChange={(e) => inputChangeHandler(setPostalCode, e)}
+                          <CFormInput type="text" id="Width" value={width} onChange={(e) => inputChangeHandler(setWidth, e)}
                             disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
                         </CCol>
                       </CRow>
                       <CRow className="mb-3 py-0">
-                        <CFormLabel htmlFor="Country" className="col-sm-4 col-form-label">Hieght</CFormLabel>
+                        <CFormLabel htmlFor="Height" className="col-sm-4 col-form-label">Hieght</CFormLabel>
                         <CCol sm={8}>
-                          <CFormInput type="text" id="Country" value={country} onChange={(e) => inputChangeHandler(setCountry, e)}
+                          <CFormInput type="text" id="Height" value={height} onChange={(e) => inputChangeHandler(setHeight, e)}
                             disabled={location.state != null && !simpleMode && location.state.mode == 'VIEW'}/>
                         </CCol>
                       </CRow>

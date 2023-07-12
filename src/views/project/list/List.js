@@ -93,7 +93,7 @@ export default class List extends Component {
         _id: _id,
       }),
     }
-    fetch(`${process.env.REACT_APP_SERVER_URL}project/${_id}`, requestOptions)
+    fetch(`${process.env.REACT_APP_SERVER_URL}video/${_id}`, requestOptions)
       .then((res) => {
         if (res.status === 200) {
           let tmpProjects = [...this.state.projects]
@@ -185,26 +185,6 @@ export default class List extends Component {
 
     return (
       <>
-        <CAlert
-          color={state.alertColor}
-          dismissible
-          visible={state.alarmVisible}
-          onClose={() => this.setState({ alarmVisible: false })}
-        >
-          {state.alertMsg}
-        </CAlert>
-        {/* <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          /> */}
         <table className="table">
           <thead>
             <tr>
@@ -219,9 +199,9 @@ export default class List extends Component {
               <tr key={project.id}>
                 <td className='text-center'>{project.id}</td>
                 <td>
-                  <Link to={`/article/list`} state={{ projectid: project.id }}>
+                  {/* <Link to={`/article/list`} state={{ projectid: project.id }}> */}
                     {project.name}
-                  </Link>
+                  {/* </Link> */}
                 </td>
                 <td>{project.keyword}</td>
                 <td className='text-center'>
@@ -276,7 +256,7 @@ export default class List extends Component {
     console.log( allProjects )
     if(allProjects == null || allProjects == undefined)
     {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project/` + pageNo + '/200')
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video`)
       const data = await response.json()
       console.log(data.data)
       saveToLocalStorage(data.data, 'allProjects')

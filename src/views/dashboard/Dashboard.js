@@ -114,7 +114,7 @@ const Dashboard = () => {
     //console.log("prevAllProjects 1", prevAllProjects)
     if(prevAllProjects === undefined || prevAllProjects === "0")
     {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project/1/200`)
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video`)
       const data = await response.json()
       console.log(data.data)
       saveToLocalStorage(data.data, 'allProjects')
@@ -172,7 +172,7 @@ const Dashboard = () => {
               icon={<CIcon width={24} icon={cilMovie} size="xl" />}
               title={project.name}
               value={<><CBadge color={(prjState[project.id] != null && prjState[project.id].isOnScrapping) ? "success" : "secondary"} size="sm">keywords</CBadge>
-                        <CBadge color={(prjState[project.id] != null && prjState[project.id].isOnAFScrapping) ? "success" : "secondary"} size="sm">articles</CBadge>
+                        <CBadge color={(prjState[project.id] != null && prjState[project.id].isOnAFScrapping) ? "success" : "secondary"} size="sm">scripts</CBadge>
                         <CBadge color={(prjState[project.id] != null && prjState[project.id].isOnPublish) ? "success" : "secondary"} size="sm">publish</CBadge></>}
               color="primary"
             />
