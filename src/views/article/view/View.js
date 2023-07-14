@@ -68,7 +68,7 @@ const View = (props) => {
   const [addImgVisible, setAddImgVisible] = useState(false)
   const [imageGallery, setImageGallery] = useState([])
   const [image, setImage] = useState('')
-  const [thumbImage, setThumbImage] = useState('')
+  const [thumbImage, setThumbImage] = useState(null)
   const addImagesComponent = useRef()
   
   console.log(activeProject)
@@ -81,7 +81,7 @@ const View = (props) => {
       const data = await response.json()
       console.log(data)
       setTitle(data.data.title)
-      if (data.data.content != null) setContent(data.data.content)
+      if (data.data.script != null) setContent(data.data.script)
       if (data.data.backgroundImage != null) setImage(data.data.backgroundImage)
       if (data.data.backgroundThumbImage != null) setThumbImage(data.data.backgroundThumbImage)
       setVideoDetail(data.data)
@@ -102,7 +102,8 @@ const View = (props) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         id: location.state.article.id,
-        content: content,
+        title: title,
+        script: content,
         state: videoDetail.state,
         backgroundImage: image,
         backgroundThumbImage: thumbImage,
@@ -121,17 +122,6 @@ const View = (props) => {
     }
     // setAlarmVisible(true)
   }
-
-  const footEditor = useRef(null)
-  const bodyEditor = useRef(null)
-
-  const getFooterSunEditorInstance = (sunEditor) => {
-    footEditor.current = sunEditor;
-  };
-
-  const getBodySunEditorInstance = (sunEditor) => {
-    bodyEditor.current = sunEditor;
-  };
 
   const deleteImageConfirm = (idx) => {
     confirmAlert({
@@ -204,6 +194,10 @@ const View = (props) => {
                   ></CFormTextarea>
                 </CCol>
               </CRow>
+            </div>
+            <div>
+              <video id={"talk-video"} src={videoDetail.awsVideoLink}  autoPlay muted={true} loop={true} width={400} controls={true}>
+              </video>
             </div>
             
             <div className="mb-3">

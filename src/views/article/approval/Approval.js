@@ -136,7 +136,7 @@ class ApprovalBase extends Component {
     var articleIds = ''
     Object.keys(checkedItem).map((item) => {
       if (checkedItem[item].checked) {
-        if (articleIds.length > 0) articleIds += ","
+        if (articleIds.length > 0) articleIds += "#"
         articleIds += item
       }
     })
@@ -147,7 +147,7 @@ class ApprovalBase extends Component {
     }
 
     console.log(this.state.projectInfo, this.state.projectInfo.projectid);
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/scrapArticleManual/${mode}/` + this.state.projectInfo.projectid + `/${articleIds}`, requestOptions)
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/scrapContentManual/${mode}/` + this.state.projectInfo.projectid + `/${articleIds}`, requestOptions)
     // this.setState({
     //   alarmVisible: false,
     //   alertMsg: 'Failed to scrapping from AF manually. Please check If AF Scheduleing is running. To use this feature must be to be off AF Scheduling',
@@ -372,9 +372,9 @@ class ApprovalBase extends Component {
                     <td className='px-2'>
                       <CButton onClick={() => this.setArticleState(3)}>Online</CButton>
                     </td>
-                    <td className='px-2'>
+                    {/* <td className='px-2'>
                       <CButton onClick={() => this.scrapFromAPI(0)}>Scrap From AF</CButton>
-                    </td>
+                    </td> */}
                     <td className='px-2'>
                       <CButton onClick={() => this.scrapFromAPI(1)}>Scrap From OpenAI</CButton>
                     </td>
@@ -415,7 +415,6 @@ class ApprovalBase extends Component {
         <table className="table">
           <thead>
             <tr>
-              <th className='text-center'>Id</th>
               <th className='text-center'>Title</th>
               <th className='text-center'>Action</th>
               <th className='text-center'>Status</th>
@@ -426,21 +425,20 @@ class ApprovalBase extends Component {
             {this.state.articles.map((article, index) => {
               //if (article.content != null && article.content.length > 0)
               {
-                if (this.state.checkedItem[article.id] == null) return
+                if (this.state.checkedItem[article.title] == null) return
 
                 return (<tr key={index}>
-                  <td className='text-center'><CFormCheck id={article.id} label={article.id}
-                    checked={this.state.checkedItem[article.id].checked}
+                  <td className='text-left'><CFormCheck id={article.title} label={article.title}
+                    checked={this.state.checkedItem[article.title].checked}
                     onChange={(e) => {
                       var ret = this.state.checkedItem
-                      ret[article.id].checked = e.target.checked
+                      ret[article.title].checked = e.target.checked
                       this.setState({
                         checkedItem: ret,
                       })
                       // console.log(e.target.checked, this.state.checkedItem[article.id])
                     }} />
-                  </td>
-                  <td>{article.title}{((article.articleId != null && article.articleId != '1234567890' && article.articleId != '55555')
+                    {((article.articleId != null && article.articleId != '1234567890' && article.articleId != '55555')
                     && (<>&nbsp;<CBadge color={
                       (article.content == null || article.content.length == 0) ? "info" : "success"
                     }>AF</CBadge></>)
@@ -511,9 +509,9 @@ class ApprovalBase extends Component {
                     <td className='px-2'>
                       <CButton onClick={() => this.setArticleState(3)}>Online</CButton>
                     </td>
-                    <td className='px-2'>
+                    {/* <td className='px-2'>
                       <CButton onClick={() => this.scrapFromAPI(0)}>Scrap From AF</CButton>
-                    </td>
+                    </td> */}
                     <td className='px-2'>
                       <CButton onClick={() => this.scrapFromAPI(1)}>Scrap From OpenAI</CButton>
                     </td>
@@ -604,7 +602,7 @@ class ApprovalBase extends Component {
 
     await _data.map((item, index) => {
       var ret = this.state.checkedItem
-      ret[item.id] = { checked: false, index: index }
+      ret[item.title] = { checked: false, index: index }
       this.setState({
         checkedItem: ret,
       })
