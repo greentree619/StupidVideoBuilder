@@ -426,25 +426,20 @@ class ApprovalBase extends Component {
               //if (article.content != null && article.content.length > 0)
               {
                 if (this.state.checkedItem[article.title] == null) return
-
+                console.log('video detail-=>', article)
                 return (<tr key={index}>
-                  <td className='text-left'><CFormCheck id={article.title} label={article.title}
-                    checked={this.state.checkedItem[article.title].checked}
-                    onChange={(e) => {
-                      var ret = this.state.checkedItem
-                      ret[article.title].checked = e.target.checked
-                      this.setState({
-                        checkedItem: ret,
-                      })
-                      // console.log(e.target.checked, this.state.checkedItem[article.id])
-                    }} />
-                    {((article.articleId != null && article.articleId != '1234567890' && article.articleId != '55555')
-                    && (<>&nbsp;<CBadge color={
-                      (article.content == null || article.content.length == 0) ? "info" : "success"
-                    }>AF</CBadge></>)
-                    || (article.articleId != null && article.articleId == '55555' && (<>&nbsp;<CBadge color={
-                      (article.content == null || article.content.length == 0) ? "info" : "success"
-                    }>OpenAI</CBadge></>)))}
+                  <td className='text-left'>
+                    <CFormCheck id={article.title} label={article.title}
+                      checked={this.state.checkedItem[article.title].checked}
+                      onChange={(e) => {
+                        var ret = this.state.checkedItem
+                        ret[article.title].checked = e.target.checked
+                        this.setState({
+                          checkedItem: ret,
+                        })
+                        // console.log(e.target.checked, this.state.checkedItem[article.id])
+                      }} />
+                    {(article.progress == 100 && article.isScrapping == false && (<>&nbsp;<CBadge color={"success"}>OpenAI</CBadge></>))}
                   </td>
                   <td className='text-center'>
                     <Link onClick={() => this.savePageState()} to={`/article/view`} state={{ mode: 'VIEW', article: article, projectInfo: this.state.projectInfo }}>

@@ -92,7 +92,7 @@ const View = (props) => {
       setBetweenNumber(ret.data.spanTime);
       setBetweenUnit(ret.data.spanUnit);
       setBetweenUnitLabel(unitLabelMap[ret.data.spanUnit]);
-    }    
+    }
   }
 
   const getPublishScheduleInfo = async (domainId) => {
@@ -250,7 +250,7 @@ const View = (props) => {
       }),
     }
 
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/updateSchedule`, requestOptions)
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project/updateSchedule`, requestOptions)
     // setAlertColor('danger')
     // setAlertMsg('Faild to update AF schedule unfortunatley.')
     let ret = await response.json()
@@ -294,7 +294,7 @@ const View = (props) => {
       }),
     }
 
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/updatePublishSchedule`, requestOptions)
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}project/updatePublishSchedule`, requestOptions)
     // setAlertColor('danger')
     // setAlertMsg('Faild to update publish schedule unfortunatley.')
     let ret = await response.json()
