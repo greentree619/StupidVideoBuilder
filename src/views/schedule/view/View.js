@@ -146,10 +146,13 @@ const View = (props) => {
 
   const startScrapping = async (domainId) => {
     location.state.isOnAFScrapping = (location.state.isOnAFScrapping == 'true' ? 'false' : 'true')
-    const response = await fetch(
-      scrappingScheduleMode == 0 ? `${process.env.REACT_APP_SERVER_URL}video/startaf/${domainId}/${location.state.scheduleId}`
-                                 : `${process.env.REACT_APP_SERVER_URL}video/startOpenAI/${domainId}/${location.state.scheduleId}`,
-    )
+    // const response = await fetch(
+    //   scrappingScheduleMode == 0 ? `${process.env.REACT_APP_SERVER_URL}video/startaf/${domainId}/${location.state.scheduleId}`
+    //                              : `${process.env.REACT_APP_SERVER_URL}video/startOpenAI/${domainId}/${location.state.scheduleId}`,
+    // )
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/startOpenAI/${domainId}/${location.state.scheduleId}`, )
+
+
     // setAlarmVisible(false)
     // setAlertMsg('Unfortunately, scrapping faild.')
     // setAlertColor('danger')
