@@ -87,7 +87,7 @@ const AppHeader = () => {
         `${process.env.REACT_APP_SERVER_URL}video/` +
           (projectId != '' ? projectId + '/0/' : '') +
           curPage +
-          '/50?keyword=',
+          '/200?keyword=',
       )
       const data = await response.json()
       if (response.status === 200) 

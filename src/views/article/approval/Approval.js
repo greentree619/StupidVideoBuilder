@@ -136,8 +136,8 @@ class ApprovalBase extends Component {
     var articleIds = ''
     Object.keys(checkedItem).map((item) => {
       if (checkedItem[item].checked) {
-        if (articleIds.length > 0) articleIds += "#"
-        articleIds += item
+        if (articleIds.length > 0) articleIds += "+NEXT+"
+        articleIds += item.replace("?", "")
       }
     })
 
@@ -146,7 +146,8 @@ class ApprovalBase extends Component {
       headers: { 'Content-Type': 'application/json' },
     }
 
-    console.log(this.state.projectInfo, this.state.projectInfo.projectid);
+    //console.log(this.state.projectInfo, this.state.projectInfo.projectid);
+    console.log("scrapFromAPI -> articleIds", articleIds);
     const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/scrapContentManual/${mode}/` + this.state.projectInfo.projectid + `/${articleIds}`, requestOptions)
     // this.setState({
     //   alarmVisible: false,
@@ -553,7 +554,7 @@ class ApprovalBase extends Component {
   }
 
   async populateArticleData(pageNo, articleState) {
-    var store = loadFromLocalStorage();
+    var store = loadFromLocalStorage('allStupidVideos');
     if (store != null && store != undefined) {
       console.log(store)
       this.setState({
@@ -566,7 +567,7 @@ class ApprovalBase extends Component {
         loading: false,
         articleState: store.articleState,
       })
-      clearLocalStorage()
+      clearLocalStorage('allStupidVideos')
       return
     }
 
