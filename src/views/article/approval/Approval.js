@@ -28,9 +28,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { saveToLocalStorage, loadFromLocalStorage, clearLocalStorage, alertConfirmOption, getPageFromArray, deleteFromArray } from 'src/utility/common.js'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { prototype } from 'simplebar-react'
 
 class ApprovalBase extends Component {
-  static displayName = ApprovalBase.name
+  static displayName = ApprovalBase.name  
   constructor(props) {
     super(props)
     this.state = {
@@ -382,6 +383,9 @@ class ApprovalBase extends Component {
                     <td className='px-2'>
                       <CButton onClick={() => this.deleteBatchArticleConfirm()}>Delete</CButton>
                     </td>
+                    <td className='px-2'>
+                      <CButton onClick={() => this.props.reloadVideos(this.state.projectInfo.projectid)}>Reload</CButton>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -427,7 +431,7 @@ class ApprovalBase extends Component {
               //if (article.content != null && article.content.length > 0)
               {
                 if (this.state.checkedItem[article.title] == null) return
-                console.log('video detail-=>', article)
+                //console.log('video detail-=>', article)
                 return (<tr key={index}>
                   <td className='text-left'>
                     <CFormCheck id={article.title} label={article.title}
@@ -514,6 +518,9 @@ class ApprovalBase extends Component {
                     <td className='px-2'>
                       <CButton onClick={() => this.deleteBatchArticleConfirm()}>Delete</CButton>
                     </td>
+                    <td className='px-2'>
+                      <CButton onClick={() => this.props.reloadVideos(this.state.projectInfo.projectid)}>Reload</CButton>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -586,7 +593,8 @@ class ApprovalBase extends Component {
     // )
     // const data = await response.json()
     //==
-    let { _data, _curPage, _total } = getPageFromArray(this.props.curProjectArticleList, 0, 200, this.state.searchKeyword, articleState)
+    console.log("curProjectArticleList", this.props.curProjectArticleList.length, pageNo)
+    let { _data, _curPage, _total } = getPageFromArray(this.props.curProjectArticleList, pageNo-1, 200, this.state.searchKeyword, articleState)
     //}}
     this.setState({
       articles: _data,
@@ -613,7 +621,8 @@ ApprovalBase.propTypes = {
   curProjectArticleList: PropTypes.array,
   curSearchArticleList: PropTypes.array,
   pannelRef: PropTypes.any,
-  toolBarVisible: PropTypes.bool
+  toolBarVisible: PropTypes.bool,
+  reloadVideos: PropTypes.func  
 }
 
 var lastScrollY = 0
@@ -647,6 +656,36 @@ const Approval = (props) => {
     return () => window.removeEventListener("scroll", onScroll);
   }, [])
 
+  const reloadVideos = async (projId) => {
+    console.log("reloadVideos", projId)
+    var curPage = 1
+    dispatch({ type: 'set', curProjectArticleList: [] })
+    dispatch({ type: 'set', curSearchArticleList: [] })
+    dispatch({ type: 'set', isLoadingAllArticle: true })
+    var articlelst = [];
+    while( true )
+    {
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}video/` +
+          (projId != '' ? projId + '/0/' : '') +
+          curPage +
+          '/200?keyword=',
+      )
+      const data = await response.json()
+      if (response.status === 200) 
+      {
+        console.log( "data.total", data );
+        var articlelst = [...articlelst, ...data.data]
+        console.log( "curProjectArticleList=>", articlelst, data.total, curPage );
+        dispatch({ type: 'set', curProjectArticleList: articlelst })
+        if( data.total <= curPage ) break
+      }
+      else break      
+      curPage++
+    }
+    dispatch({ type: 'set', isLoadingAllArticle: false })
+  }
+
   const changedPannelPos = () => {
     //if((document.body.offsetHeight - 177 - pannelRef.current.getBoundingClientRect().top))
     
@@ -676,6 +715,8 @@ const Approval = (props) => {
   //console.log(location.state)
   //console.log(location.search)
   //console.log(new URLSearchParams(location.search).get('domainId'))
-  return <ApprovalBase location={location} isLoadingAllArticle={isLoadingAllArticle} curProjectArticleList={curProjectArticleList} curSearchArticleList={curSearchArticleList} pannelRef={pannelRef} toolBarVisible={toolBarVisibleVal} {...props} />
+  return <ApprovalBase location={location} isLoadingAllArticle={isLoadingAllArticle} 
+      curProjectArticleList={curProjectArticleList} curSearchArticleList={curSearchArticleList} 
+      pannelRef={pannelRef} toolBarVisible={toolBarVisibleVal} reloadVideos={reloadVideos} {...props} />
 }
 export default Approval

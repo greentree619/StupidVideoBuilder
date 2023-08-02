@@ -48,7 +48,7 @@ export function getPageFromArray(ary, pageNo, pageSize, keyword, state){
     } catch (e) {
         console.error(e)
     }
-    return {_data: pageList, _curPage: pageNo, _total: total}
+    return {_data: pageList, _curPage: pageNo + 1, _total: total}
 };
 
 export function searchFromArray( ary, keyword, state ){
