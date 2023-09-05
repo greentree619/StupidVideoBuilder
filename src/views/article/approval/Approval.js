@@ -31,13 +31,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import { prototype } from 'simplebar-react'
 
 class ApprovalBase extends Component {
-  static displayName = ApprovalBase.name  
+  static displayName = ApprovalBase.name
+  static refreshIntervalId
   constructor(props) {
     super(props)
     this.state = {
       articles: [],
       sync: {},
       checkedItem: {},
+      progressState: {},
       indexMap: {},
       loading: true,
       curPage: 1,
@@ -65,6 +67,7 @@ class ApprovalBase extends Component {
   }
 
   componentWillUnmount() {
+    clearTimeout( this.refreshIntervalId );
   }
 
   componentDidUpdate(prevProps) {
@@ -142,6 +145,8 @@ class ApprovalBase extends Component {
       }
     })
 
+    if(articleIds.length == 0) return
+
     const requestOptions = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
@@ -162,13 +167,70 @@ class ApprovalBase extends Component {
       //   alertMsg: 'Started to scrapping from AF Successfully.',
       //   alertColor: 'success',
       // })
+      this.refreshIntervalId = setTimeout(this.scrapProgressState, 100);
       toast.success('Started to scrapping from ' + (mode == 0 ? "AF" : "OpenAI") + ' Successfully.', alertConfirmOption);
     }
     else {
       toast.error('Failed to scrapping from ' + (mode == 0 ? "AF" : "OpenAI") + ' manually. Please check If Scheduleing is running. To use this feature must be to be off Scheduling'
         , alertConfirmOption);
     }
-    // this.setState({ alarmVisible: true })    
+    // this.setState({ alarmVisible: true })
+  };
+
+  scrapProgressState = async (titles = '') => {
+        var checkedItem = this.state.checkedItem
+    var articleIds = titles
+
+    if(articleIds.length == 0){
+      Object.keys(checkedItem).map((item) => {
+        if (checkedItem[item].checked) {
+          if (articleIds.length > 0) articleIds += "+NEXT+"
+          articleIds += item.replace("?", "")
+        }
+      })
+    }
+    console.log('scrapProgressState, titles, articleIds)', titles, articleIds)
+
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    }
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/scrapProgressState/` + this.state.projectInfo.projectid + `/${articleIds}`, requestOptions)
+    let ret = await response.json()
+    console.log('scrapProgressState', ret)
+    var ret2 =  { ...this.state.progressState, ...ret }
+    this.setState({
+      progressState: ret2,
+    })
+
+    articleIds = ''
+    Object.keys(ret).map((key) => {
+      if(ret[key]['isComplete'] == false){
+        if (articleIds.length > 0) articleIds += "+NEXT+"
+        articleIds += key
+      }
+      else{
+        this.setState(state => {
+          const articles = state.articles.map((article, index) => {
+            console.log('state.articles.map', article)
+            if( key == article.title.replace('?', '')){
+              article.isScrapping = false
+              article.progress = 100
+            }
+            return article
+          })
+          return {
+            articles,
+          };
+        });
+      }
+      //console.log("scrapProgressState", ret[key]['isComplete'])
+    })
+
+    console.log('setTimeout', ret, articleIds)
+    if( articleIds.length > 0 ){      
+      this.refreshIntervalId = setTimeout(this.scrapProgressState, 100, articleIds);
+    }
   };
 
   async deleteArticle(_id) {
@@ -456,7 +518,8 @@ class ApprovalBase extends Component {
                     </CButton>
                   </td>
                   <td className='text-center'>
-                    {this.getArticleState(article.state)}
+                    {/* {this.getArticleState(article.state)} */}
+                    {this.state.progressState[article.title.replace('?', '')] != null && ("[" + this.state.progressState[article.title.replace('?', '')].curStep + "/"+ this.state.progressState[article.title.replace('?', '')].totalStep + "]  " + this.state.progressState[article.title.replace('?', '')].progress + "%")}
                   </td>
                 </tr>)
               }
@@ -593,8 +656,8 @@ class ApprovalBase extends Component {
     // )
     // const data = await response.json()
     //==
-    console.log("curProjectArticleList", this.props.curProjectArticleList.length, pageNo)
     let { _data, _curPage, _total } = getPageFromArray(this.props.curProjectArticleList, pageNo-1, 200, this.state.searchKeyword, articleState)
+    console.log("curProjectArticleList", this.props.curProjectArticleList.length, pageNo)
     //}}
     this.setState({
       articles: _data,
@@ -672,7 +735,7 @@ const Approval = (props) => {
           '/200?keyword=',
       )
       const data = await response.json()
-      if (response.status === 200) 
+      if (response.status === 200)
       {
         console.log( "data.total", data );
         var articlelst = [...articlelst, ...data.data]
@@ -719,4 +782,5 @@ const Approval = (props) => {
       curProjectArticleList={curProjectArticleList} curSearchArticleList={curSearchArticleList} 
       pannelRef={pannelRef} toolBarVisible={toolBarVisibleVal} reloadVideos={reloadVideos} {...props} />
 }
+
 export default Approval
