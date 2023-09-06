@@ -63,7 +63,7 @@ class ApprovalBase extends Component {
 
   componentDidMount() {
     this.populateArticleData(1, this.state.articleState)
-    console.log('child props: ', this.props.isLoadingAllArticle)
+    //console.log('child props: ', this.props.isLoadingAllArticle)
   }
 
   componentWillUnmount() {
@@ -167,7 +167,7 @@ class ApprovalBase extends Component {
       //   alertMsg: 'Started to scrapping from AF Successfully.',
       //   alertColor: 'success',
       // })
-      this.refreshIntervalId = setTimeout(this.scrapProgressState, 100);
+      this.refreshIntervalId = setTimeout(this.scrapProgressState, 100, '', true);
       toast.success('Started to scrapping from ' + (mode == 0 ? "AF" : "OpenAI") + ' Successfully.', alertConfirmOption);
     }
     else {
@@ -177,8 +177,8 @@ class ApprovalBase extends Component {
     // this.setState({ alarmVisible: true })
   };
 
-  scrapProgressState = async (titles = '') => {
-        var checkedItem = this.state.checkedItem
+  scrapProgressState = async (titles = '', force = false) => {
+    var checkedItem = this.state.checkedItem
     var articleIds = titles
 
     if(articleIds.length == 0){
@@ -192,10 +192,15 @@ class ApprovalBase extends Component {
     console.log('scrapProgressState, titles, articleIds)', titles, articleIds)
 
     const requestOptions = {
-      method: 'GET',
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({        
+        projectId: this.state.projectInfo.projectid,
+        articleIds: articleIds,
+      }),
     }
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/scrapProgressState/` + this.state.projectInfo.projectid + `/${articleIds}`, requestOptions)
+    
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}video/scrapProgressState`, requestOptions)
     let ret = await response.json()
     console.log('scrapProgressState', ret)
     var ret2 =  { ...this.state.progressState, ...ret }
@@ -203,11 +208,11 @@ class ApprovalBase extends Component {
       progressState: ret2,
     })
 
-    articleIds = ''
+    var articleIds2 = ''
     Object.keys(ret).map((key) => {
       if(ret[key]['isComplete'] == false){
-        if (articleIds.length > 0) articleIds += "+NEXT+"
-        articleIds += key
+        if (articleIds2.length > 0) articleIds2 += "+NEXT+"
+        articleIds2 += key
       }
       else{
         this.setState(state => {
@@ -227,9 +232,14 @@ class ApprovalBase extends Component {
       //console.log("scrapProgressState", ret[key]['isComplete'])
     })
 
-    console.log('setTimeout', ret, articleIds)
-    if( articleIds.length > 0 ){      
-      this.refreshIntervalId = setTimeout(this.scrapProgressState, 100, articleIds);
+    console.log('setTimeout', ret, articleIds2)
+    if( force ){
+      if( articleIds2.length == 0 ) articleIds2 = articleIds
+      else force = false
+    }    
+
+    if( articleIds2.length > 0 ){      
+      this.refreshIntervalId = setTimeout(this.scrapProgressState, 100, articleIds2, force);
     }
   };
 
@@ -667,14 +677,20 @@ class ApprovalBase extends Component {
       totalPage: _total,
     })
 
+    var articleIds = ''
     await _data.map((item, index) => {
       var ret = this.state.checkedItem
       ret[item.title] = { checked: false, index: index }
       this.setState({
         checkedItem: ret,
       })
+
+      if (articleIds.length > 0) articleIds += "+NEXT+"
+      articleIds += item.title.replace("?", "")
       //console.log(ids, "<--", articleDocumentIds);
     });
+
+    this.refreshIntervalId = setTimeout(this.scrapProgressState, 100, articleIds);//<<<
   }
 }
 
